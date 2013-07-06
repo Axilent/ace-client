@@ -41,6 +41,6 @@ def dump_project_data():
     Dumps the data from the project into JSON in stdout.
     """
     cfg = get_cfg()
-    project_resource = _get_resource('axilent.library','Project')
+    project_resource = _get_resource('axilent.library','project')
     project_data = project_resource.get(params={'project':cfg.get('Connection','project')})
     sys.stdout.write(json.dumps(project_data))
