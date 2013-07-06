@@ -21,7 +21,7 @@ def dumpproject(args):
     """
     Dumps a project to a JSON file.
     """
-    pass #TODO
+    client.dump_project_data()
 
 def loadproject(args):
     """
