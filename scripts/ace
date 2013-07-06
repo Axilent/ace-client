@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+import argparse
+from ace import commands
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('command')
+parser.add_argument('--library-key',dest='library_key',default=None)
+parser.add_argument('--api-key',dest='api_key',default=None)
+parser.add_argument('--project',dest='project',default=None)
+parser.add_argument('--endpoint',dest='endpoint',default='https://www.axilent.net')
+parser.add_argument('--api-version',dest='api_version',default='1.0')
+parser.add_argument('--no-ping',dest='no_ping',action='store_true',default=False)
+
+def usage(args):
+    print 'Usage: ace <command>'
+
+def main():
+    """
+    Mainline.
+    """
+    args = parser.parse_args()
+    try:
+        command = getattr(commands,args.command)
+        command(args)
+    except AttributeError:
+        usage(args)
+
+if __name__ == '__main__':
+    main()
+
