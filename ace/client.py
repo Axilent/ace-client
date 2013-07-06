@@ -26,3 +26,10 @@ def get_library_client():
     Gets the library API client.
     """
     return _get_client('axilent.library')
+
+def ping_library():
+    """
+    Pings the library - testing the connection.
+    """
+    c = _get_client('axilent.library')
+    c.ping()
