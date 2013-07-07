@@ -36,9 +36,11 @@ def add_project(args):
     cfg_path = os.path.join(getcwd(),'.acerc')
     cfg.read(cfg_path)
     
-    cfg.add_section(args.project)
-    cfg.set(args.project,'library_key',args.library_key)
+    cfg.add_section('Project:%s' % args.project)
+    cfg.set('Project:%s' % args.project,'library_key',args.library_key)
     
+    with open(cfg_path,'wb') as cfg_file:
+        cfg.write(cfg_file)
 
 def get_cfg():
     """
