@@ -53,7 +53,7 @@ def load_project_data(args):
     project_resource = _get_resource('axilent.library','project',key)
     data = None
     with open(args.data_file,'r') as data_file:
-        data = json.loads(data_file.read())
+        data = data_file.read()
     
     project_resource.put(data={'project':args.project,'project-data':data})
     print 'Project data loaded.'
