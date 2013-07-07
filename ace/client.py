@@ -38,5 +38,5 @@ def dump_project_data(args):
     cfg = get_cfg()
     key = cfg.get('Project:%s' % args.project,'library_key')
     project_resource = _get_resource('axilent.library','project',key)
-    project_data = project_resource.get(params={'project':project})
+    project_data = project_resource.get(params={'project':args.project})
     sys.stdout.write(json.dumps(project_data))
