@@ -23,15 +23,22 @@ def init_environment(args):
     cfg = SafeConfigParser()
     cfg.add_section('Connection')
     cfg.set('Connection','endpoint',args.endpoint)
-    cfg.set('Connection','library_key',args.library_key)
-    cfg.set('Connection','project',args.project)
     cfg.set('Connection','api_version',args.api_version)
-    
-    if args.api_key:
-        cfg.set('Connection','api_key',args.api_key)
     
     with open(cfg_path,'wb') as cfg_file:
         cfg.write(cfg_file)
+
+def add_project(args):
+    """
+    Adds a project definition to ace.
+    """
+    cfg = SafeConfigParser()
+    cfg_path = os.path.join(getcwd(),'.acerc')
+    cfg.read(cfg_path)
+    
+    cfg.add_section(args.project)
+    cfg.set(args.project,'library_key',args.library_key)
+    
 
 def get_cfg():
     """

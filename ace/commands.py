@@ -13,7 +13,7 @@ def init(args):
     print 'Environment initialized'
     if not args.no_ping:
         print 'Testing connection...'
-        client.ping_library()
+        client.ping_library(args.library_key)
         print 'Connection OK'
 
 
@@ -21,10 +21,16 @@ def dumpproject(args):
     """
     Dumps a project to a JSON file.
     """
-    client.dump_project_data()
+    client.dump_project_data(args)
 
 def loadproject(args):
     """
     Loads a project from a JSON file.
     """
     pass # TODO
+
+def addproject(args):
+    """
+    Adds a project definition locally.
+    """
+    config.add_project(args)

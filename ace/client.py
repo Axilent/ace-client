@@ -7,40 +7,36 @@ from ace.utils import slugify
 import json
 import sys
 
-def _get_resource(app,resource,library=True):
+def _get_resource(app,resource,key):
     """
     Gets a resource client.
     """
     cfg = get_cfg()
-    apikey_setting = 'library_key' if library else 'api_key'
-    return ResourceClient('%s/api/resource' % cfg.get('Connection','endpoint'),app,cfg.get('Connection','api_version'),resource,auth_user=cfg.get('Connection',apikey_setting))
+    return ResourceClient('%s/api/resource' % cfg.get('Connection','endpoint'),app,cfg.get('Connection','api_version'),resource,auth_user=key)
 
-def _get_client(app,library=True):
+def _get_client(app,key):
     """
     Gets a regular API client.
     """
     cfg = get_cfg()
-    apikey_setting = 'library_key' if library else 'api_key'
-    return HttpClient('%s/api' % cfg.get('Connection','endpoint'),app,cfg.get('Connection','api_version'),auth_user=cfg.get('Connection',apikey_setting))
+    return HttpClient('%s/api' % cfg.get('Connection','endpoint'),app,cfg.get('Connection','api_version'),auth_user=key)
 
-def get_library_client():
-    """
-    Gets the library API client.
-    """
-    return _get_client('axilent.library')
-
-def ping_library():
+def ping_library(key):
     """
     Pings the library - testing the connection.
     """
-    c = _get_client('axilent.library')
+    c = _get_client('axilent.library',key)
     c.ping()
 
-def dump_project_data():
+def dump_project_data(args):
     """
     Dumps the data from the project into JSON in stdout.
     """
+    if not args.project:
+        raise ValueError('Must specify project.')
+    
     cfg = get_cfg()
-    project_resource = _get_resource('axilent.library','project')
-    project_data = project_resource.get(params={'project':cfg.get('Connection','project')})
+    key = cfg.get(args.project,'library_key')
+    project_resource = _get_resource('axilent.library','project',key)
+    project_data = project_resource.get(params={'project':project})
     sys.stdout.write(json.dumps(project_data))
