@@ -26,7 +26,7 @@ def loadproject(args):
     """
     Loads a project from a JSON file.
     """
-    pass # TODO
+    client.load_project_data(args)
 
 def addproject(args):
     """

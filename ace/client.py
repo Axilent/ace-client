@@ -39,4 +39,21 @@ def dump_project_data(args):
     key = cfg.get('Project:%s' % args.project,'library_key')
     project_resource = _get_resource('axilent.library','project',key)
     project_data = project_resource.get(params={'project':args.project})
-    sys.stdout.write(json.dumps(project_data))
+    sys.stdout.write(json.dumps(project_data['project-data']))
+
+def load_project_data(args):
+    """
+    Loads the data from the specified data file into project.
+    """
+    if not args.project and args.data_file:
+        raise ValueError('Must specify both project and data file.')
+    
+    cfg = get_cfg()
+    key = cfg.get('Project:%s' % args.project,'library_key')
+    project_resource = _get_resource('axilent.library','project',key)
+    data = None
+    with open(args.data_file,'r') as data_file:
+        data = json.loads(data_file.read())
+    
+    project_resource.put(data={'project':args.project,'project-data':data})
+    print 'Project data loaded.'
