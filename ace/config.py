@@ -7,24 +7,13 @@ from os import getcwd, mkdir, remove, walk
 import json
 import hashlib
 
-def ace_dir():
-    """
-    Gets or creates the .ace directory.
-    """
-    ace_dirpath = os.path.join(getcwd(),'.ace')
-    
-    if not os.path.exists(ace_dirpath):
-        mkdir(ace_dirpath)
-    
-    return ace_dirpath
-
 def init_environment(args):
     """
     Initializes the environment.
     """    
-    dirpath = ace_dir()
+    dirpath = getcwd()
     
-    cfg_path = os.path.join(dirpath,'ace.cfg')
+    cfg_path = os.path.join(dirpath,'.acerc')
     
     # Clean out previous config
     if os.path.exists(cfg_path):
@@ -49,7 +38,7 @@ def get_cfg():
     Gets the config file.
     """
     cfg = SafeConfigParser()
-    cfg_path = os.path.join(ace_dir(),'ace.cfg')
+    cfg_path = os.path.join(getcwd(),'.acerc')
 
     # Sanity check
     if not os.path.exists(cfg_path):
