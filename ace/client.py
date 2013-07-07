@@ -45,7 +45,7 @@ def load_project_data(args):
     """
     Loads the data from the specified data file into project.
     """
-    if not args.project and args.data_file:
+    if not (args.project and args.data_file):
         raise ValueError('Must specify both project and data file.')
     
     cfg = get_cfg()
