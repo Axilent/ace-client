@@ -11,11 +11,10 @@ def init(args):
     print 'Initializing environment.'
     config.init_environment(args)
     print 'Environment initialized'
-    if not args.no_ping:
+    if args.library_key:
         print 'Testing connection...'
         client.ping_library(args.library_key)
         print 'Connection OK'
-
 
 def dumpproject(args):
     """
