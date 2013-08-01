@@ -104,5 +104,7 @@ def trigger(args):
                         'identity':{}}) # nothing for now
         sys.stdout.write('.')
         sys.stdout.flush()
+    
+    sys.stdout.write('\n')
 
         
