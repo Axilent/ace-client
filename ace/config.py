@@ -119,7 +119,7 @@ def add_graphstack(args):
     if not args.graphstack and args.api_key:
         raise ValueError('You must specify the graphstack to add with the --graphstack option, and it\'s API key with the --api-key option.')
     
-    cfg.set('Project:%s' % project,'graphstack.%s' % slugify(args.graphstack),args.api_key)
+    cfg.set('Project:%s' % project,'graphstack-%s' % slugify(args.graphstack),args.api_key)
     write_cfg(cfg)
 
 def set_graphstack(args):
@@ -162,7 +162,7 @@ def get_api_key(args):
     cfg = get_cfg()
     gs = current_graphstack(args)
     project = current_project(args)
-    return cfg.get('Project:%s' % project,'graphstack:%s' % gs)
+    return cfg.get('Project:%s' % project,'graphstack-%s' % gs)
 
 def get_library_key(args):
     """
