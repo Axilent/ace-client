@@ -64,6 +64,7 @@ def profile(args):
     c = _get_client('axilent.triggers',get_api_key(args),args)
     profile_data = c.profile()
     sys.stdout.write(profile_data['profile'])
+    sys.stdout.write('\n')
 
 def trigger(args):
     """
