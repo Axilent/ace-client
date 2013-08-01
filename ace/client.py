@@ -92,7 +92,7 @@ def trigger(args):
     
     for i in xrange(num_triggers):
         if not args.profile:
-            changer = randin(0,num_triggers)
+            changer = randint(0,num_triggers)
             if changer > threshold:
                 p = profile(args)
         
