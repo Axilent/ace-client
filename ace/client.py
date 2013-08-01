@@ -88,7 +88,7 @@ def trigger(args):
     # Variables
     var_dict = {}
     if args.variables:
-        for var_pair in args.variables.split(','):
+        for var_pair in args.variables.split('&'):
             var_name, var_value = var_pair.split(':')
             var_dict[var_name] = var_value
     
