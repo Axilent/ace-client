@@ -103,5 +103,6 @@ def trigger(args):
                         'environment':{}, # nothing for now
                         'identity':{}}) # nothing for now
         sys.stdout.write('.')
+        sys.stdout.flush()
 
         
