@@ -96,6 +96,7 @@ def trigger(args):
             if changer > threshold:
                 p = profile(args)
         
+        print 'triggering with profile',p,'category',args.category,'action',args.action,'and variables',var_dict
         c.trigger(profile=p,category=args.category,action=args.action,variables=var_dict)
         sys.stdout.write('.')
 
