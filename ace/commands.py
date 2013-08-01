@@ -33,3 +33,9 @@ def addproject(args):
     Adds a project definition locally.
     """
     config.add_project(args)
+
+def setproject(args):
+    """
+    Sets the project in the local directory.
+    """
+    config.set_project(args)
