@@ -7,25 +7,27 @@ from ace.utils import slugify
 import json
 import sys
 
-def _get_resource(app,resource,key):
+def _get_resource(app,resource,key,args):
     """
     Gets a resource client.
     """
     cfg = get_cfg()
-    return ResourceClient('%s/api/resource' % cfg.get('Connection','endpoint'),app,cfg.get('Connection','api_version'),resource,auth_user=key)
+    project = current_project(args)
+    return ResourceClient('%s/api/resource' % cfg.get('Connection','endpoint'),app,cfg.get('Project:%s' % project,'api_version'),resource,auth_user=key)
 
-def _get_client(app,key):
+def _get_client(app,key,args):
     """
     Gets a regular API client.
     """
     cfg = get_cfg()
-    return HttpClient('%s/api' % cfg.get('Connection','endpoint'),app,cfg.get('Connection','api_version'),auth_user=key)
+    project = current_project(args)
+    return HttpClient('%s/api' % cfg.get('Connection','endpoint'),app,cfg.get('Project:%s' % project,'api_version'),auth_user=key)
 
-def ping_library(key):
+def ping_library(key,args):
     """
     Pings the library - testing the connection.
     """
-    c = _get_client('axilent.library',key)
+    c = _get_client('axilent.library',key,args)
     c.ping()
 
 def dump_project_data(args):
@@ -37,7 +39,7 @@ def dump_project_data(args):
     
     cfg = get_cfg()
     key = cfg.get('Project:%s' % current_project(args),'library_key')
-    project_resource = _get_resource('axilent.library','project',key)
+    project_resource = _get_resource('axilent.library','project',key,args)
     project_data = project_resource.get(params={'project':current_project(args)})
     sys.stdout.write(json.dumps(project_data['project-data']))
 
@@ -50,7 +52,7 @@ def load_project_data(args):
     
     cfg = get_cfg()
     key = cfg.get('Project:%s' % current_project(args),'library_key')
-    project_resource = _get_resource('axilent.library','project',key)
+    project_resource = _get_resource('axilent.library','project',key,args)
     data = None
     with open(args.data_file,'r') as data_file:
         data = data_file.read()

@@ -39,3 +39,11 @@ def setproject(args):
     Sets the project in the local directory.
     """
     config.set_project(args)
+
+def pinglibrary(args):
+    """
+    Pings the library.
+    """
+    cfg = config.get_cfg()
+    key = cfg.get('Project:%s' % config.current_project(args),'library_key')
+    client.ping_library(key,args)
