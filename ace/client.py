@@ -37,7 +37,8 @@ def dump_project_data(args):
         raise ValueError('Must specify project.')
     
     project_resource = _get_resource('axilent.library','project',get_library_key(args),args)
-    project_data = project_resource.get(params={'project':current_project(args)})
+    #project_data = project_resource.get(params={'project':current_project(args)})
+    project_data = project_resource.get()
     sys.stdout.write(json.dumps(project_data['project-data']))
 
 def load_project_data(args):
@@ -52,7 +53,8 @@ def load_project_data(args):
     with open(args.data_file,'r') as data_file:
         data = data_file.read()
     
-    project_resource.put(data={'project':current_project(args),'project-data':data})
+    #project_resource.put(data={'project':current_project(args),'project-data':data})
+    project_resource.put(data={'project-data':data})
     print 'Project data loaded.'
 
 def profile(args):
