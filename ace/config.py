@@ -88,6 +88,9 @@ def set_project(args):
     Sets the project in the local directory.
     """
     env = get_env()
+    if not env.has_section('Project'):
+        env.add_section('Project')
+    
     env.set('Project','project',args.project)
     
     with open(_env_path(),'wb') as env_file:
