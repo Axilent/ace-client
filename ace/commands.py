@@ -47,3 +47,4 @@ def pinglibrary(args):
     cfg = config.get_cfg()
     key = cfg.get('Project:%s' % config.current_project(args),'library_key')
     client.ping_library(key,args)
+    print 'pong'
