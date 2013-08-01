@@ -6,6 +6,7 @@ import os.path
 from os import getcwd, mkdir, remove, walk
 import json
 import hashlib
+from ace.utils import slugify
 
 def init_environment(args):
     """
@@ -118,7 +119,7 @@ def add_graphstack(args):
     if not args.graphstack and args.api_key:
         raise ValueError('You must specify the graphstack to add with the --graphstack option, and it\'s API key with the --api-key option.')
     
-    cfg.set('Project:%s' % project,'graphstack.%s' % args.graphstack,args.api_key)
+    cfg.set('Project:%s' % project,'graphstack.%s' % slugify(args.graphstack),args.api_key)
     write_cfg(cfg)
 
 def set_graphstack(args):
@@ -126,7 +127,7 @@ def set_graphstack(args):
     Sets the local graphstack.
     """
     env = get_env()
-    env.set('Project','graphstack',args.graphstack)
+    env.set('Project','graphstack',slugify(args.graphstack))
     
     write_env(env)
 
@@ -135,7 +136,7 @@ def current_graphstack(args):
     Gets the current graphstack.
     """
     if args.graphstack:
-        return args.graphstack
+        return slugify(args.graphstack)
     
     env = get_env()
     return env.get('Project','graphstack')
