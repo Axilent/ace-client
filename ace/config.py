@@ -129,3 +129,47 @@ def set_graphstack(args):
     env.set('Project','graphstack',args.graphstack)
     
     write_env(env)
+
+def current_graphstack(args):
+    """
+    Gets the current graphstack.
+    """
+    if args.graphstack:
+        return args.graphstack
+    
+    env = get_env()
+    return env.get('Project','graphstack')
+
+def api_version(args):
+    """
+    Gets the active api version to use.
+    """
+    if args.api_version:
+        return args.api_version
+    
+    cfg = get_cfg()
+    project = current_project(args)
+    return cfg.get('Project:%s' % project,'api_version')
+
+def get_api_key(args):
+    """
+    Gets the API key for the appropriate graphstack.
+    """
+    if args.api_key:
+        return args.api_key
+    
+    cfg = get_cfg()
+    gs = current_graphstack(args)
+    project = current_project(args)
+    return cfg.get('Project:%s' % project,'graphstack:%s' % gs)
+
+def get_library_key(args):
+    """
+    Gets the library key for the current project.
+    """
+    if args.library_key:
+        return args.library_key
+    
+    cfg = get_cfg()
+    project = current_project(args)
+    return cfg.get('Project:%s' % project,'library_key')
