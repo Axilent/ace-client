@@ -97,7 +97,7 @@ def trigger(args):
                 p = c.profile()['profile']
         
         print 'triggering with profile',p,'category',args.category,'action',args.action,'and variables',var_dict
-        c.trigger(profile=p,category=args.category,action=args.action,variables=var_dict,environment={})
+        c.trigger(profile=p,category=args.category,action=args.action,variables=var_dict,environment={},identity={})
         sys.stdout.write('.')
 
         
