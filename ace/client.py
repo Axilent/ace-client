@@ -100,8 +100,8 @@ def trigger(args):
                         'category':args.category,
                         'action':args.action,
                         'variables':var_dict,
-                        'environment':environment,
-                        'identity':identity})
+                        'environment':{}, # nothing for now
+                        'identity':{}}) # nothing for now
         sys.stdout.write('.')
 
         
