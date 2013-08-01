@@ -64,3 +64,9 @@ def profile(args):
     Gets a profile ID.
     """
     client.profile(args)
+
+def trigger(args):
+    """
+    Sends a trigger.
+    """
+    client.trigger(args)

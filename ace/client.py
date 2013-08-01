@@ -6,6 +6,7 @@ from ace.config import get_cfg, current_project, current_graphstack, api_version
 from ace.utils import slugify
 import json
 import sys
+from random import randint
 
 def _get_resource(app,resource,key,args):
     """
@@ -62,3 +63,40 @@ def profile(args):
     profile_data = c.profile()
     sys.stdout.write(profile_data['profile'])
 
+def trigger(args):
+    """
+    Sends a one or more triggers.
+    """
+    if not args.category and args.action:
+        raise ValueError('Must specify --category and --action.')
+    
+    num_triggers = int(args.num_triggers)
+    distribution = float(args.profile_distribution)
+    
+    threshold = int(round(float(num_triggers) * distribution))
+    
+    c = _get_client('axilent.triggers',get_api_key(args),args)
+    
+    p = None
+    if not args.profile:
+        p = profile(args)
+    else:
+        p = args.profile
+    
+    # Variables
+    var_dict = {}
+    if args.variables:
+        for var_pair in args.variables.split(','):
+            var_name, var_value = var_pair.split(':')
+            var_dict[var_name] = var_value
+    
+    for i in xrange(num_triggers):
+        if not args.profile:
+            changer = randin(0,num_triggers)
+            if changer > threshold:
+                p = profile(args)
+        
+        c.trigger(profile=p,category=args.category,action=args.action,variables=var_dict)
+        sys.stdout.write('.')
+
+        
