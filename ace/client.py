@@ -59,4 +59,6 @@ def profile(args):
     Gets a profile id.
     """
     c = _get_client('axilent.triggers',get_api_key(args),args)
-    print c.profile()
+    profile_data = c.profile()
+    sys.stdout.write(profile_data['profile'])
+
