@@ -79,7 +79,7 @@ def trigger(args):
     
     p = None
     if not args.profile:
-        p = profile(args)
+        p = c.profile()
     else:
         p = args.profile
     
@@ -94,7 +94,7 @@ def trigger(args):
         if not args.profile:
             changer = randint(0,num_triggers)
             if changer > threshold:
-                p = profile(args)
+                p = c.profile()
         
         print 'triggering with profile',p,'category',args.category,'action',args.action,'and variables',var_dict
         c.trigger(profile=p,category=args.category,action=args.action,variables=var_dict)
