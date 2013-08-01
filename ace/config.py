@@ -24,8 +24,7 @@ def init_environment(args):
     cfg.add_section('Connection')
     cfg.set('Connection','endpoint',args.endpoint)
     
-    with open(cfg_path,'wb') as cfg_file:
-        cfg.write(cfg_file)
+    write_cfg(cfg)
 
 def _cfg_path():
     return os.path.join(os.path.expanduser('~'),'.acerc')
@@ -42,8 +41,7 @@ def add_project(args):
     cfg.set('Project:%s' % args.project,'library_key',args.library_key)
     cfg.set('Project:%s' % args.project,'api_version',args.api_version)
     
-    with open(cfg_path,'wb') as cfg_file:
-        cfg.write(cfg_file)
+    write_cfg(cfg)
 
 def get_cfg():
     """
@@ -63,6 +61,13 @@ def get_cfg():
 def _env_path():
     return os.path.join(getcwd(),'ace.txt')
 
+def write_cfg(cfg):
+    """
+    Writes the config to file.
+    """
+    with open(_cfg_path(),'wb') as cfg_file:
+        cfg.write(cfg_file)
+
 def get_env():
     """
     Gets the local environment for ace.  Directory based.
@@ -72,6 +77,13 @@ def get_env():
     if os.path.exists(env_path):
         cfg.read(env_path)
     return cfg
+
+def write_env(env):
+    """
+    Writes the environment to file.
+    """
+    with open(_env_path(),'wb') as env_file:
+        env.write(env_file)
 
 def current_project(args):
     """
@@ -92,6 +104,28 @@ def set_project(args):
         env.add_section('Project')
     
     env.set('Project','project',args.project)
+    write_env(env)
+
+def add_graphstack(args):
+    """
+    Adds a graphstack to the current project.
+    """
+    project = current_project(args)
+    cfg = get_cfg()
+    if not cfg.has_section('Project:%s' % project):
+        raise ValueError('Project %s has not been defined.  Run ace addproject first.' % project)
     
-    with open(_env_path(),'wb') as env_file:
-        env.write(env_file)
+    if not args.graphstack and args.api_key:
+        raise ValueError('You must specify the graphstack to add with the --graphstack option, and it\'s API key with the --api-key option.')
+    
+    cfg.set('Project:%s' % project,'graphstack.%s' % args.graphstack,args.api_key)
+    write_cfg(cfg)
+
+def set_graphstack(args):
+    """
+    Sets the local graphstack.
+    """
+    env = get_env()
+    env.set('Project','graphstack',args.graphstack)
+    
+    write_env(env)

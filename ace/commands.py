@@ -48,3 +48,15 @@ def pinglibrary(args):
     key = cfg.get('Project:%s' % config.current_project(args),'library_key')
     client.ping_library(key,args)
     print 'pong'
+
+def addgraphstack(args):
+    """
+    Adds a graphstack.
+    """
+    config.add_graphstack(args)
+
+def setgraphstack(args):
+    """
+    Sets the default graphstack.
+    """
+    config.set_graphstack(args)

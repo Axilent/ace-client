@@ -12,6 +12,7 @@ parser.add_argument('--project',dest='project',default=None)
 parser.add_argument('--endpoint',dest='endpoint',default='https://www.axilent.net')
 parser.add_argument('--api-version',dest='api_version',default='astoria-preview') # TODO needs to change once astoria is released
 parser.add_argument('--data-file',dest='data_file',default=None)
+parser.add_argument('--graphstack',dest='graphstack',default=None)
 
 def usage(args):
     print 'Usage: ace <command>'
