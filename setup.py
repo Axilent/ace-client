@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 try:
-    from setuptools import setup 
+    from setuptools import setup, find_packages
 except ImportError, err:
-    from distutils.core import setup
+    from distutils.core import setup, find_packages
 
 from ace import VERSION
 
@@ -10,7 +10,7 @@ setup(
     name='Axilent-Ace',
     version='.'.join(map(str,VERSION)),
     description='CLI client for Axilent ACE.',
-    packages=['ace'],
+    packages=find_packages(),
     include_package_data=True,
     license='BSD',
     author='Loren Davie',

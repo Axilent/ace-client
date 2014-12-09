@@ -34,15 +34,35 @@ def add_project(args):
     """
     Adds a project definition to ace.
     """
-    cfg = SafeConfigParser()
-    cfg_path = _cfg_path()
-    cfg.read(cfg_path)
+    cfg = get_cfg()
     
     cfg.add_section('Project:%s' % args.project)
     cfg.set('Project:%s' % args.project,'library_key',args.library_key)
     cfg.set('Project:%s' % args.project,'api_version',args.api_version)
     
     write_cfg(cfg)
+
+def remove_project(args):
+    """ 
+    Removes the project.
+    """
+    cfg = get_cfg()
+    
+    section_name = 'Project:%s' % args.project
+    cfg.remove_section(section_name)
+    
+    write_cfg(cfg)
+
+def list_projects(args):
+    """ 
+    Lists the projects.
+    """
+    cfg = get_cfg()
+    
+    for section in cfg.sections():
+        if section.startswith('Project:'):
+            prefix, project_name = section.split(':')
+            print project_name
 
 def get_cfg():
     """
@@ -86,7 +106,7 @@ def write_env(env):
     with open(_env_path(),'wb') as env_file:
         env.write(env_file)
 
-def current_project(args):
+def get_active_project(args):
     """
     Gets the current project from a local ace.txt file, or from the arguments.
     """
@@ -107,11 +127,33 @@ def set_project(args):
     env.set('Project','project',args.project)
     write_env(env)
 
+def clear_project(args):
+    """ 
+    Clears the project from the local directory.
+    """
+    env = get_env()
+    if env.has_section('Project'):
+        env.remove_option('Project','project')
+    write_env(env)
+
+def current_project(args):
+    """ 
+    Returns the local directory current project.
+    """
+    env = get_env()
+    if env.has_section('Project'):
+        if env.has_option('Project','project'):
+            print env.get('Project','project')
+        else:
+            print 'Project is not set for this directory'
+    else:
+        print 'No project info defined for this directory'
+
 def add_graphstack(args):
     """
     Adds a graphstack to the current project.
     """
-    project = current_project(args)
+    project = get_active_project(args)
     cfg = get_cfg()
     if not cfg.has_section('Project:%s' % project):
         raise ValueError('Project %s has not been defined.  Run ace addproject first.' % project)
@@ -141,7 +183,7 @@ def current_graphstack(args):
     env = get_env()
     return env.get('Project','graphstack')
 
-def api_version(args):
+def get_active_api_version(args):
     """
     Gets the active api version to use.
     """
@@ -149,8 +191,15 @@ def api_version(args):
         return args.api_version
     
     cfg = get_cfg()
-    project = current_project(args)
+    project = get_active_project(args)
     return cfg.get('Project:%s' % project,'api_version')
+
+def api_version(args):
+    """ 
+    Gets the api version of the active project.
+    """
+    av = get_active_api_version(args)
+    print av
 
 def get_api_key(args):
     """
@@ -161,7 +210,7 @@ def get_api_key(args):
     
     cfg = get_cfg()
     gs = current_graphstack(args)
-    project = current_project(args)
+    project = get_active_project(args)
     return cfg.get('Project:%s' % project,'graphstack-%s' % gs)
 
 def get_library_key(args):
@@ -172,5 +221,5 @@ def get_library_key(args):
         return args.library_key
     
     cfg = get_cfg()
-    project = current_project(args)
+    project = get_active_project(args)
     return cfg.get('Project:%s' % project,'library_key')
