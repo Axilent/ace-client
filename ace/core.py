@@ -4,6 +4,7 @@ Core module for ace-cli.
 from ace import config
 from ace import project
 from ace import graphstack
+from ace import plugins
 from inspect import getdoc
 
 def seed_parser(parser):
@@ -45,7 +46,7 @@ def seed_commands(commands):
             install
             uninstall
             list
-            refresh
+            available
     """
     default_init = {'__default__':init_command}
     commands['init'] = default_init
@@ -198,20 +199,25 @@ def install_plugin_command(args):
     """ 
     Installs a plugin.
     """
-    pass # TODO
+    config.install_plugin(args)
 
 def uninstall_plugin_command(args):
     """ 
     Uninstalls a plugin.
     """
-    pass # TODO
+    config.uninstall_plugin(args)
 
 def list_installed_plugins_command(args):
     """ 
     Lists the installed plugins.
     """
-    pass # TODO
+    config.list_installed_plugins(args)
 
+def available_plugins_command(args):
+    """ 
+    Lists the available, uninstalled plugins.
+    """
+    plugins.available(args)
 
 # ====================
 # = Command Builders =
@@ -253,7 +259,8 @@ def plugins_commands():
     """
     picom = {'install':install_plugin_command,
              'uninstall':uninstall_plugin_command,
-             'list':list_installed_plugins_command}
+             'list':list_installed_plugins_command,
+             'available':available_plugins_command}
     return picom
 
 # ==================
@@ -285,7 +292,7 @@ def seed_parser_plugins(parser):
     """ 
     Seeds the parser for plugins related args.
     """
-    pass # TODO
+    parser.add_argument('--plugin',dest='plugin',default=None)
 
 # =================
 # = Help Builders =
@@ -325,5 +332,6 @@ def plugins_help():
     """
     pihelp = {'install':getdoc(install_plugin_command),
               'uninstall':getdoc(uninstall_plugin_command),
-              'list':getdoc(list_installed_plugins_command)}
+              'list':getdoc(list_installed_plugins_command),
+              'available':getdoc(available_plugins_command)}
     return pihelp

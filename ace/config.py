@@ -280,3 +280,62 @@ def get_library_key(args):
     cfg = get_cfg()
     project = get_active_project(args)
     return cfg.get('Project:%s' % project,'library_key')
+
+def plugin_installed(plugin_name):
+    """ 
+    Tests if the specified plugin is installed.
+    """
+    cfg = get_cfg()
+    return cfg.has_section('Plugin:%s' % plugin_name)
+
+def get_installed_plugins():
+    """ 
+    Gets a list of the installed plugins.
+    """
+    cfg = get_cfg()
+    installed_plugins = []
+    for section in cfg.sections():
+        if section.startswith('Plugin:'):
+            prefix, plugin_name = section.split(':')
+            installed_plugins.append(plugin_name)
+    return installed_plugins
+
+def list_installed_plugins(args):
+    """ 
+    Lists the installed plugins.
+    """
+    cfg = get_cfg()
+    for section in cfg.sections():
+        if section.startswith('Plugin:'):
+            prefix, plugin_name = section.split(':')
+            print plugin_name
+
+def install_plugin(args):
+    """ 
+    Adds the plugin to the config.
+    """
+    if not args.plugin:
+        raise ValueError('You must specify the plugin to install with the --plugin option.')
+    cfg = get_cfg()
+    section_name = 'Plugin:%s' % args.plugin
+    if not cfg.has_section(section_name):
+        cfg.add_section(section_name)
+        write_cfg(cfg)
+    else:
+        print args.plugin,'is already installed.'
+
+def uninstall_plugin(args):
+    """ 
+    Uninstalls the plugin.
+    """
+    if not args.plugin:
+        raise ValueError('You must specifiy the plugin to uninstall.')
+    cfg = get_cfg()
+    section_name = 'Plugin:%s' % args.plugin
+    if cfg.has_section(section_name):
+        cfg.remove_section(section_name)
+        write_cfg(cfg)
+    else:
+        print args.plugin,'is not installed.'
+
+
