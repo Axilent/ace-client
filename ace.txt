@@ -1,4 +1,0 @@
-[Project]
-project = Hello Axilent
-graphstack = hello-axilent-development
-
