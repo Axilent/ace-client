@@ -40,6 +40,7 @@ def seed_commands(commands):
             current
             trigger
             apikey
+            list
         plugins
             install
             uninstall
@@ -181,7 +182,14 @@ def api_key_command(args):
     """ 
     Gets the API key for the current graphstack.
     """
-    return config.get_api_key(args)
+    return config.api_key(args)
+
+def list_graphstacks_command(args):
+    """ 
+    Lists the graphstacks for a project.
+    """
+    return config.list_graphstacks(args)
+
 
 # =======================
 # = Plugins Subcommands =
@@ -234,7 +242,8 @@ def graphstack_commands():
              'clear':clear_graphstack_command,
              'current':current_graphstack_command,
              'trigger':trigger_graphstack_command,
-             'apikey':api_key_command}
+             'apikey':api_key_command,
+             'list':list_graphstacks_command}
     
     return gscom
 

@@ -2,7 +2,7 @@
 Axilent Client functionality for Ace.
 """
 from sharrock.client import HttpClient, ResourceClient, ServiceException
-from ace.config import get_cfg, get_active_project, current_graphstack, get_active_api_version, get_api_key, get_library_key
+from ace.config import get_cfg, get_active_project, get_active_graphstack, get_active_api_version, get_api_key, get_library_key
 from ace.utils import slugify
 import json
 import sys

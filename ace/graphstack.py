@@ -3,6 +3,8 @@ Graphstack functions.
 """
 from ace import config
 from ace import client
+from random import randint
+import sys
 
 def trigger_graphstack(args):
     """ 

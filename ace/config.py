@@ -1,7 +1,7 @@
 """
 Config for ACE.
 """
-from ConfigParser import SafeConfigParser
+from ConfigParser import SafeConfigParser, NoOptionError
 import os.path
 from os import getcwd, mkdir, remove, walk
 import json
@@ -164,6 +164,37 @@ def add_graphstack(args):
     cfg.set('Project:%s' % project,'graphstack-%s' % slugify(args.graphstack),args.api_key)
     write_cfg(cfg)
 
+def remove_graphstack(args):
+    """ 
+    Removes the graphstack from the project def.
+    """
+    project = get_active_project(args)
+    cfg = get_cfg()
+    if not cfg.has_section('Project:%s' % project):
+        raise ValueError('Project %s has not been defined.  Run ace addproject first.' % project)
+    
+    if not args.graphstack:
+        raise ValueError('You must specify the graphstack to remove with the --graphstack option.')
+    
+    if cfg.has_option('Project:%s' % project,'graphstack-%s' % slugify(args.graphstack)):
+        cfg.remove_option('Project:%s' % project,'graphstack-%s' % slugify(args.graphstack))
+    
+    write_cfg(cfg)
+
+def list_graphstacks(args):
+    """ 
+    Lists graphstacks for a project.
+    """
+    project = get_active_project(args)
+    cfg = get_cfg()
+    if not cfg.has_section('Project:%s' % project):
+        raise ValueError('Project %s has not been defined.  Run ace addproject first.' % project)
+    
+    for option in cfg.options('Project:%s' % project):
+        if option.startswith('graphstack-'):
+            prefix, gs_name = option.split('-',1)
+            print gs_name
+
 def set_graphstack(args):
     """
     Sets the local graphstack.
@@ -173,7 +204,16 @@ def set_graphstack(args):
     
     write_env(env)
 
-def current_graphstack(args):
+def clear_graphstack(args):
+    """ 
+    Clears the local graphstack.
+    """
+    env = get_env()
+    if env.has_option('Project','graphstack'):
+        env.remove_option('Project','graphstack')
+    write_env(env)
+
+def get_active_graphstack(args):
     """
     Gets the current graphstack.
     """
@@ -182,6 +222,16 @@ def current_graphstack(args):
     
     env = get_env()
     return env.get('Project','graphstack')
+
+def current_graphstack(args):
+    """ 
+    Print the current graphstack.
+    """
+    try:
+        gs = get_active_graphstack(args)
+        print gs
+    except NoOptionError:
+        print 'Current graphstack is not set'
 
 def get_active_api_version(args):
     """
@@ -209,9 +259,16 @@ def get_api_key(args):
         return args.api_key
     
     cfg = get_cfg()
-    gs = current_graphstack(args)
+    gs = get_active_graphstack(args)
     project = get_active_project(args)
     return cfg.get('Project:%s' % project,'graphstack-%s' % gs)
+
+def api_key(args):
+    """ 
+    Prints the api key.
+    """
+    ak = get_api_key(args)
+    print ak
 
 def get_library_key(args):
     """
