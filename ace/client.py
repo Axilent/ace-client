@@ -26,7 +26,7 @@ def ping_library(args):
     """
     Pings the library - testing the connection.
     """
-    c = _get_client('axilent.library',get_library_key(args),args)
+    c = get_client('axilent.library',get_library_key(args),args)
     c.ping()
 
 def dump_project_data(args):
