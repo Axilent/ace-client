@@ -292,13 +292,17 @@ def get_installed_plugins():
     """ 
     Gets a list of the installed plugins.
     """
-    cfg = get_cfg()
-    installed_plugins = []
-    for section in cfg.sections():
-        if section.startswith('Plugin:'):
-            prefix, plugin_name = section.split(':')
-            installed_plugins.append(plugin_name)
-    return installed_plugins
+    try:
+        cfg = get_cfg()
+        installed_plugins = []
+        for section in cfg.sections():
+            if section.startswith('Plugin:'):
+                prefix, plugin_name = section.split(':')
+                installed_plugins.append(plugin_name)
+        return installed_plugins
+    except ValueError:
+        # this will be the case in an uninitialized environment
+        return []
 
 def list_installed_plugins(args):
     """ 
