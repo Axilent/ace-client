@@ -272,7 +272,7 @@ def seed_parser_project(parser):
     """
     parser.add_argument('--library-key',dest='library_key',default=None)
     parser.add_argument('--project',dest='project',default=None)
-    parser.add_argument('--api-version',dest='api_version',default='astoria-preview')
+    parser.add_argument('--api-version',dest='api_version',default=None)
     parser.add_argument('--data-file',dest='data_file',default=None)
 
 def seed_parser_graphstack(parser):

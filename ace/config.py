@@ -38,7 +38,10 @@ def add_project(args):
     
     cfg.add_section('Project:%s' % args.project)
     cfg.set('Project:%s' % args.project,'library_key',args.library_key)
-    cfg.set('Project:%s' % args.project,'api_version',args.api_version)
+    if args.api_version:
+        cfg.set('Project:%s' % args.project,'api_version',args.api_version)
+    else:
+        cfg.set('Project:%s' % args.project,'api_version','astoria') # Default API version
     
     write_cfg(cfg)
 
@@ -241,8 +244,6 @@ def get_active_api_version(args):
         return args.api_version
     
     cfg = get_cfg()
-    print 'active project:',project
-    print 'active api version:',cfg.get('Project:%s' % project,'api_version')
     project = get_active_project(args)
     return cfg.get('Project:%s' % project,'api_version')
 
