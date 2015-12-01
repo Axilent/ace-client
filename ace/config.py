@@ -241,6 +241,8 @@ def get_active_api_version(args):
         return args.api_version
     
     cfg = get_cfg()
+    print 'active project:',project
+    print 'active api version:',cfg.get('Project:%s' % project,'api_version')
     project = get_active_project(args)
     return cfg.get('Project:%s' % project,'api_version')
 
