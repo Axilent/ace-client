@@ -42,7 +42,7 @@ def upload(args):
                 path = os.path.join(root,name)
                 if utils.is_modified(path):
                     key = find_key(path,keymap,keyfields)
-                    key, created = upload_document(path,key=key)
+                    key, created = upload_document(path,args,key=key)
                     utils.write_hash(path)
                     if created:
                         print 'Created new content item',key
@@ -53,8 +53,8 @@ def upload(args):
                 else:
                     print name, 'not modified. Skipping.'
     
-    write_keyfields(keyfields)
-    write_keymap(keymap)
+    utils.write_keyfields(keyfields)
+    utils.write_keymap(keymap)
 
 def keyfields(args):
     """ 

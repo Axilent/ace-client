@@ -24,6 +24,8 @@ def seed_parser(parser):
     parser.add_argument('--content-type',dest='content_type',default=None)
     parser.add_argument('--body-field',dest='body_field',default=None)
     parser.add_argument('--key-field',dest='key_field',default=None)
+    parser.add_argument('--no-search-index',dest='search_index',action='store_const',const=False,default=True)
+    parser.add_argument('--no-reset-workflow',dest='reset_workflow',action='store_const',const=False,default=True)
 
 def seed_commands(commands):
     """ 

@@ -30,3 +30,5 @@ def get_content_item(key,args):
     env = cfg.get_env()
     resource = ac.get_resource('axilent.content','content',cfg.get_api_key(args),args)
     return resource.get(params={'content_type_slug':slugify(env.get('Dox','content_type')),'content_key':key})
+
+
