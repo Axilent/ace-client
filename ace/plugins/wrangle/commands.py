@@ -9,7 +9,7 @@ def deploy(args):
     """ 
     Deploys matching content.
     """
-    client = ac.get_client('axilent.library',get_library_key(args))
+    client = ac.get_client('axilent.library',get_library_key(args),args)
     
     client.deployallcontent(deployment_target=args.deployment_target,
                             workflow_step_names=args.workflow_steps,
