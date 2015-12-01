@@ -11,8 +11,12 @@ def deploy(args):
     """
     client = ac.get_client('axilent.library',get_library_key(args),args)
     
+    workflow_steps = []
+    if args.workflow_steps:
+        workflow_steps = args.workflow_steps.split(',')
+    
     client.deployallcontent(deployment_target=args.deployment_target,
-                            workflow_step_names=args.workflow_steps,
+                            workflow_step_names=workflow_steps,
                             content_type=args.content_type)
 
 def archive(args):
