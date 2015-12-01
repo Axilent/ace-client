@@ -18,7 +18,7 @@ def seed_parser(parser):
     Seeds the arg parser.
     """
     parser.add_argument('--deployment-target',dest='deployment_target',default=None)
-    parser.add_argument('--workflow-steps',dest='wokflow_steps',default=None)
+    parser.add_argument('--workflow-steps',dest='workflow_steps',default=None)
     parser.add_argument('--content-type',dest='content_type',default=None)
 
 def seed_commands(commands):
