@@ -23,7 +23,13 @@ def archive(args):
     """ 
     Archives matching content.
     """
-    pass # TODO
+    client = ac.get_client('axilent.library',get_library_key(args),args)
+    workflow_steps = []
+    if args.workflow_steps:
+        workflow_steps = args.workflow_steps.split(',')
+    
+    client.archiveallcontent(content_type=args.content_type,
+                             workflow_step_names=workflow_steps)
 
 def advance(args):
     """ 
