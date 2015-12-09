@@ -128,7 +128,7 @@ def library_key(args):
     if not cfg.has_section('Project:%s' % project):
         raise ValueError('Project %s has not been defined. Run `ace project add` first.' % project)
     
-    return cfg.get('Project:%s' % project,'library_key')
+    print cfg.get('Project:%s' % project,'library_key')
 
 def set_project(args):
     """
