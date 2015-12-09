@@ -144,7 +144,7 @@ def show_librarykey_command(args):
     """ 
     Show the current project's library key.
     """
-    return config.library_key(args)
+    print config.library_key(args)
 
 # ==========================
 # = GraphStack Subcommands =
