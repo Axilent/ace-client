@@ -170,7 +170,7 @@ def add_graphstack(args):
     project = get_active_project(args)
     cfg = get_cfg()
     if not cfg.has_section('Project:%s' % project):
-        raise raise ValueError('Project %s has not been defined. Run `ace project add` first.' % project)
+        raise ValueError('Project %s has not been defined. Run `ace project add` first.' % project)
     
     if not args.graphstack and args.api_key:
         raise ValueError('You must specify the graphstack to add with the --graphstack option, and it\'s API key with the --api-key option.')
