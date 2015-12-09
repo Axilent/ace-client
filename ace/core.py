@@ -140,6 +140,12 @@ def list_projects_command(args):
     """
     return config.list_projects(args)
 
+def show_librarykey_command(args):
+    """ 
+    Show the current project's library key.
+    """
+    return config.library_key(args)
+
 # ==========================
 # = GraphStack Subcommands =
 # ==========================
@@ -235,7 +241,8 @@ def project_commands():
             'ping':ping_library_command,
             'apiversion':api_version_command,
             'current':current_project_command,
-            'list':list_projects_command}
+            'list':list_projects_command,
+            'librarykey':show_librarykey_command}
     return pcom
 
 def graphstack_commands():
