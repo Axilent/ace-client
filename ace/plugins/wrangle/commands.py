@@ -59,3 +59,11 @@ def reset(args):
     client.resetallcontent(content_type=args.content_type,
                            workflow_step_names=workflow_steps)
 
+def count(args):
+    """ 
+    Counts the matching content.
+    """
+    client, workflow_steps = _setup(args)
+    
+    client.countcontent(content_type=args.contet_type,
+                        workflow_step_names=workflow_steps)

@@ -33,6 +33,7 @@ def seed_commands(commands):
         'advance':cmd_functions.advance,
         'retreat':cmd_functions.retreat,
         'reset':cmd_functions.reset,
+        'count':cmd_functions.count,
     }
     
     commands['wrangle'] = wrangle_commands
