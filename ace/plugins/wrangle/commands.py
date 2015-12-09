@@ -65,5 +65,6 @@ def count(args):
     """
     client, workflow_steps = _setup(args)
     
-    print client.countcontent(content_type=args.content_type,
-                              workflow_step_names=workflow_steps)
+    result = client.countcontent(content_type=args.content_type,
+                                 workflow_step_names=workflow_steps)
+    print result['content-count']
